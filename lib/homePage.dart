@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:async';
 
+import 'package:indoornavigation/navigator.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -21,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   speak() async {
     List<String> array = [
       "Bedroom 1",
-      "Bedroom 2",
+      "Entrance",
       "Living Room",
       "Kitchen",
       "Washroom"
@@ -43,7 +45,7 @@ class _HomePageState extends State<HomePage> {
     List<String> array = [
       "Start Navigation",
       "Bedroom 1",
-      "Bedroom 2",
+      "Entrance",
       "Living Room",
       "Kitchen",
       "Washroom"
@@ -82,20 +84,23 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.amber,
+        ),
         body: FutureBuilder(
-      future: _fApp,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          //error
-          return Text("Error ;)");
-        } else if (snapshot.hasData) {
-          //has data
-          return content();
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
-    ));
+          future: _fApp,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              //error
+              return Text("Error ;)");
+            } else if (snapshot.hasData) {
+              //has data
+              return content();
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ));
   }
 
   Widget content() {
@@ -115,39 +120,48 @@ class _HomePageState extends State<HomePage> {
         //Living Room
         onTap: (() {
           print(dest);
-          speakString(dest + "Double tap to confirm the destination");
-          // sleep(const Duration(seconds: 3));
-          // speakString("Double tap to confirm the destination");
+          speakString(dest + ".Double tap to confirm the destination");
         }),
         onDoubleTap: () {
           setState(() {
             destination = dest;
-            speakString("Destination set to" + dest);
+            speakString("Destination set to." +
+                dest +
+                ".Tap on the screen to start navigation");
+            // speakString("Navigating you to " + dest);
             print("Destination :" + destination);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => NavigatorPage(dest: destination)));
           });
         },
-        child: Card(
-          color: Colors.amber,
-          elevation: 10,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  child: Text(dest, style: TextStyle(fontSize: 25)),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  child: Text("Single Tap to announce the destination"),
-                ),
-                Container(
-                  child: Text("Double tap to confirm the destinaiton"),
-                ),
-              ],
+        child: Container(
+          height: 110,
+          width: 320,
+          child: Card(
+            color: Colors.amber,
+            elevation: 10,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    child: Text(dest, style: TextStyle(fontSize: 30)),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    child: Text("Single Tap to announce the destination"),
+                  ),
+                  Container(
+                    child: Text("Double tap to confirm the destinaiton"),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -160,6 +174,7 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           position(value),
+          destinationCard("Entrance"),
           SizedBox(
             height: 10,
           ),
@@ -176,10 +191,6 @@ class _HomePageState extends State<HomePage> {
             height: 10,
           ),
           destinationCard("Kitchen"),
-          SizedBox(
-            height: 10,
-          ),
-          destinationCard("Bedroom 2"),
           SizedBox(
             height: 10,
           ),
