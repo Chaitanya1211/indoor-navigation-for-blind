@@ -82,6 +82,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
 
     startNavigation() {
       if (source == "2") {
+        // source entrance
         if (widget.dest == "Entrance") {
           speakString("You are already at the destination. Stop");
         } else if (widget.dest == "Living Room") {
@@ -97,6 +98,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
               "Move 5 steps in forward direction. Turn Left. Move 10 steps forward. Reached bedroom");
         }
       } else if (source == "3") {
+        // source living room
         if (widget.dest == "Entrance") {
           speakString("Turn right. Take 5 steps forward");
         } else if (widget.dest == "Living Room") {
@@ -111,6 +113,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
           speakString("Move 10 steps in forward direction. Reached Bedroom 1");
         }
       } else if (source == "5") {
+        // source washroom
         if (widget.dest == "Entrance") {
           speakString(
               "Turn back. Take 3 steps forward. Turn right. Move 5 steps forward. reached entrance");
@@ -124,6 +127,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
           speakString("Move 5 steps in forward direction. Reached bedroom 1");
         }
       } else if (source == "4") {
+        // source kitchen
         if (widget.dest == "Entrance") {
           speakString(
               "Move 2 steps forward. turn left. move 5 steps forward. turn right. move 5 steps forward. reached entrance");
@@ -139,6 +143,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
               "move 2 steps forward.turn right. move 5 steps forward. Reached bedroom 1");
         }
       } else if (source == "1") {
+        // source bedroom 1
         if (widget.dest == "Entrance") {
           speakString(
               "Move 10 steps forward. turn right.move 5 steps forward. reached entrance");
