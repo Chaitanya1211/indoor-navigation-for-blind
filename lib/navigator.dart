@@ -26,7 +26,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
         future: _fApp,
         builder: ((context, snapshot) {
           if (snapshot.hasError) {
-            return Text("Error aala yrr ;)");
+            return Text("Error)");
           } else if (snapshot.hasData) {
             return nav();
           } else {
