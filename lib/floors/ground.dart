@@ -39,7 +39,9 @@ class _GroundState extends State<Ground> {
                       height: 100,
                       width: 250,
                       color: Colors.amber,
-                      child: Column(children: [
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                         Text("Living Room",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 30))
@@ -61,7 +63,9 @@ class _GroundState extends State<Ground> {
                       height: 100,
                       width: 250,
                       color: Colors.amber,
-                      child: Column(children: [
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                         Text("Bedroom",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 30))
@@ -88,7 +92,9 @@ class _GroundState extends State<Ground> {
                       height: 100,
                       width: 250,
                       color: Colors.amber,
-                      child: Column(children: [
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                         Text("Kitchen",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 30))
@@ -110,7 +116,9 @@ class _GroundState extends State<Ground> {
                       height: 100,
                       width: 250,
                       color: Colors.amber,
-                      child: Column(children: [
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                         Text("Washroom",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 30))
@@ -120,6 +128,8 @@ class _GroundState extends State<Ground> {
                 ),
               ],
             )
+          ,ElevatedButton(onPressed:()=>Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Ground())) , child: Text(" Go to First Floor"))
           ]),
     );
   }

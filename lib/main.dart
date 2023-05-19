@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:indoornavigation/homePage.dart';
 import 'package:flutter/services.dart';
+import 'package:indoornavigation/splashscreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomePage());
+        home:  SplashScreenExample());
   }
 }

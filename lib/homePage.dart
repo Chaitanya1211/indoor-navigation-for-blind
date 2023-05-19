@@ -142,10 +142,15 @@ class _HomePageState extends State<HomePage> {
                 height: 150,
                 width: 250,
                 color: Colors.amber,
-                child: Column(children: [
-                  Text("Ground Floor",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30))
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                  
+                 
+                  const Text("Ground Floor",
+                        style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+                  
                 ]),
               ),
             ),
@@ -158,7 +163,9 @@ class _HomePageState extends State<HomePage> {
                 height: 150,
                 width: 250,
                 color: Colors.amber,
-                child: Column(children: [
+                child: Column(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   children: [
                   Text("First Floor",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 30))

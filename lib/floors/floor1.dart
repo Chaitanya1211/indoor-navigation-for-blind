@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:indoornavigation/floors/ground.dart';
 
 import '../Helper/directionProvider.dart';
 
@@ -40,7 +41,9 @@ class _Floor1State extends State<Floor1> {
                       height: 100,
                       width: 250,
                       color: Colors.amber,
-                      child: Column(children: [
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                         Text("Living Room",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 30))
@@ -62,7 +65,9 @@ class _Floor1State extends State<Floor1> {
                       height: 100,
                       width: 250,
                       color: Colors.amber,
-                      child: Column(children: [
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                         Text("Bedroom",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 30))
@@ -89,7 +94,9 @@ class _Floor1State extends State<Floor1> {
                       height: 100,
                       width: 250,
                       color: Colors.amber,
-                      child: Column(children: [
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                         Text("Kitchen",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 30))
@@ -111,7 +118,9 @@ class _Floor1State extends State<Floor1> {
                       height: 100,
                       width: 250,
                       color: Colors.amber,
-                      child: Column(children: [
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                         Text("Washroom",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 30))
@@ -121,6 +130,8 @@ class _Floor1State extends State<Floor1> {
                 ),
               ],
             )
+          ,ElevatedButton(onPressed:()=>Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Ground())) , child: Text(" Go to Ground Floor"))
           ]),
     );
   }
