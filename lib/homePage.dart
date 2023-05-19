@@ -5,7 +5,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:async';
-
+import 'package:dijkstra/dijkstra.dart';
+import 'package:indoornavigation/floors/floor1.dart';
+import 'package:indoornavigation/floors/ground.dart';
 import 'package:indoornavigation/navigator.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,67 +22,15 @@ class _HomePageState extends State<HomePage> {
   final Future<FirebaseApp> _fApp = Firebase.initializeApp();
   String value = "0";
   String destination = "";
-  speak() async {
-    List<String> array = [
-      "Bedroom 1",
-      "Entrance",
-      "Living Room",
-      "Kitchen",
-      "Washroom"
-    ];
-    var temp = int.parse(value) - 1;
-    String text = array[temp];
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.setPitch(1);
-    await flutterTts.speak("Currently you are present in " + text);
-  }
+  List<List> GroundFloor = [
+    [00, 01],
+    [01, 02],
+    [02, 03],
+    [02, 04]
+  ];
 
-  speakString(String text) async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.setPitch(1);
-    await flutterTts.speak(text);
-  }
-
-  position(String value) {
-    List<String> array = [
-      "Start Navigation",
-      "Bedroom 1",
-      "Entrance",
-      "Living Room",
-      "Kitchen",
-      "Washroom"
-    ];
-    var temp = int.parse(value);
-    return GestureDetector(
-      onTap: () {
-        speak();
-      },
-      child: Card(
-          // margin: EdgeInsets.all(10),
-          color: Colors.amber,
-          elevation: 5.0,
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Container(
-                  child: const Text(
-                    "Currently you are present in ",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-                Container(
-                  child: Text(
-                    array[temp],
-                    style: const TextStyle(fontSize: 25),
-                  ),
-                )
-              ],
-            ),
-          )),
-    );
-  }
-
+  int source = 00;
+  int dest = 04;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,88 +64,110 @@ class _HomePageState extends State<HomePage> {
         });
       },
     );
+    int intValue = int.parse(value);
+    int floorNo = (intValue / 10).toInt();
 
-    destinationCard(String dest) {
-      return GestureDetector(
-        //Living Room
-        onTap: (() {
-          print(dest);
-          speakString(dest + ".Double tap to confirm the destination");
-        }),
-        onDoubleTap: () {
-          setState(() {
-            destination = dest;
-            speakString("Destination set to." +
-                dest +
-                ".Tap on the screen to start navigation");
-            // speakString("Navigating you to " + dest);
-            print("Destination :" + destination);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => NavigatorPage(dest: destination)));
-          });
-        },
-        child: Container(
-          height: 110,
-          width: 320,
-          child: Card(
-            color: Colors.amber,
-            elevation: 10,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    child: Text(dest, style: TextStyle(fontSize: 30)),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    child: Text("Single Tap to announce the destination"),
-                  ),
-                  Container(
-                    child: Text("Double tap to confirm the destinaiton"),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-    }
+    //   if (floorNo == 1) {
+    //     //Ground Floor
+    //     return Center(
+    //       child: Column(
+    //           mainAxisAlignment: MainAxisAlignment.start,
+    //           crossAxisAlignment: CrossAxisAlignment.center,
+    //           children: [
+    //             Padding(
+    //               padding: EdgeInsets.all(8),
+    //               child: Text(
+    //                 "Ground Floor",
+    //                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+    //               ),
+    //             ),
+    //             Card(
+    //               child: Column(
+    //                 children: [Text("Currently You are Present in"), Text(value)],
+    //               ),
+    //             )
+    //           ]),
+    //     );
+    //   } else if (floorNo == 2) {
+    //     //First Floor
+    //     return Center(
+    //       child: Column(
+    //           mainAxisAlignment: MainAxisAlignment.start,
+    //           crossAxisAlignment: CrossAxisAlignment.center,
+    //           children: [
+    //             Padding(
+    //               padding: EdgeInsets.all(8),
+    //               child: Text(
+    //                 "First Floor",
+    //                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+    //               ),
+    //             ),
+    //             Card(
+    //               child: Padding(
+    //                 padding: const EdgeInsets.all(8.0),
+    //                 child: Column(
+    //                   children: [
+    //                     Text("Currently You are Present in"),
+    //                     Text(value)
+    //                   ],
+    //                 ),
+    //               ),
+    //             )
+    //           ]),
+    //     );
+    //   }
+    //   return Text("NO floor");
+    // }
 
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          position(value),
-          destinationCard("Entrance"),
-          SizedBox(
-            height: 10,
-          ),
-          destinationCard("Living Room"),
-          SizedBox(
-            height: 10,
-          ),
-          destinationCard("Washroom"),
-          SizedBox(
-            height: 10,
-          ),
-          destinationCard("Bedroom 1"),
-          SizedBox(
-            height: 10,
-          ),
-          destinationCard("Kitchen"),
-          SizedBox(
-            height: 10,
-          ),
-        ],
-      ),
+      child: Column(children: [
+        Padding(
+          padding: EdgeInsets.all(8),
+          child: (floorNo == 1)
+              ? Text("Ground Floor",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))
+              : Text("First Floor",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () => {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Ground()))
+              },
+              child: Container(
+                height: 150,
+                width: 250,
+                color: Colors.amber,
+                child: Column(children: [
+                  Text("Ground Floor",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30))
+                ]),
+              ),
+            ),
+            GestureDetector(
+              onTap: () => {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Floor1()))
+              },
+              child: Container(
+                height: 150,
+                width: 250,
+                color: Colors.amber,
+                child: Column(children: [
+                  Text("First Floor",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30))
+                ]),
+              ),
+            )
+          ],
+        )
+      ]),
     );
   }
 }
